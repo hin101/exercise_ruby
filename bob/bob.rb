@@ -1,24 +1,12 @@
 class Bob
-  def self.hey(saying)
-    if silent?(saying)
-      return 'Fine. Be that way!'
-    elsif shouting?(saying)
-      return 'Whoa, chill out!'
-    elsif question?(saying)
-      return 'Sure.'
-    end
+  def self.hey(remark)
+    return 'Fine. Be that way!' if remark.strip.empty?
+
+    up_cased_word_count = remark[1..-1].scan(/([A-Z]+[ \?\'\!\.]?)/).count
+    down_cased_word_count = remark[1..-1].scan(/([a-z]+[ \?\'\!\.]?)/).count
+    return 'Whoa, chill out!' if up_cased_word_count > down_cased_word_count
+    return 'Sure.' if remark[-1] == '?'
+
     'Whatever.'
-  end
-
-  def self.silent?(s)
-    s.nil? || s.strip.empty?
-  end
-
-  def self.question?(s)
-    s.end_with?('?')
-  end
-
-  def self.shouting?(s)
-    s.upcase.eql?(s)
   end
 end
